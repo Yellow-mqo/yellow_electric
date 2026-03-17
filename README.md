@@ -1,1 +1,1 @@
-# yellow_electric
+- 黄色電機まとめページ
