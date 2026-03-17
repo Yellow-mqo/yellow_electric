@@ -10,13 +10,73 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+		    /* ツールチップ全体の親要素 */
+		    .copy-item {
+		        position: relative;
+		        display: inline-block;
+		    }
+		
+		    /* 吹き出し本体（ベース） */
+		    .copy-item .tooltip {
+		        visibility: hidden;
+		        opacity: 0;
+		        position: absolute;
+		        z-index: 10;
+		        bottom: 150%; /* アイコンからの高さ */
+		        left: 50%;
+		        transform: translateX(-50%) translateY(0);
+		        transition: all 0.3s ease;
+			
+		        background-color: #555;
+		        color: #fff;
+		        padding: 6px 12px;
+		        border-radius: 6px;
+		        font-size: 0.75rem;
+		        white-space: nowrap;
+		        pointer-events: none; /* マウス反応を邪魔しない */
+		    }
+		
+		    /* 吹き出しのツノ（三角形） */
+		    .copy-item .tooltip::after {
+		        content: "";
+		        position: absolute;
+		        top: 100%; /* 本体の真下 */
+		        left: 50%;
+		        margin-left: -5px;
+		        border-width: 5px;
+		        border-style: solid;
+		        border-color: #555 transparent transparent transparent; /* 基本は黒 */
+		        transition: border-color 0.3s ease;
+		    }
+		
+		    /* 【ホバー時】または【コピー完了時】の表示設定（位置を固定） */
+		    .copy-item:hover .tooltip,
+		    .copy-item.is-copied .tooltip {
+		        visibility: visible !important;
+		        opacity: 1 !important;
+		        transform: translateX(-50%) translateY(-8px) !important; /* 上に8px浮かす */
+		    }
+		
+		    /* 【コピー完了時】専用の色指定 */
+		    .copy-item.is-copied .tooltip {
+		        background-color: #00ff55 !important;
+		        color: #333 !important;
+		        font-weight: bold;
+		    }
+		
+		    /* 【コピー完了時】専用のツノの色 */
+		    .copy-item.is-copied .tooltip::after {
+		        border-top-color: #00ff55 !important;
+		    }
+		</style>
 	</head>
 	<body class="landing is-preload">
 		<div id="page-wrapper">
 
 			<!-- Header -->
 				<header id="header" class="alt">
-					<h1><a href="index.html">Alpha</a> by HTML5 UP</h1>
+					<h1><a href="index.html">Yellow-Electric</a></h1>
 					<nav id="nav">
 						<ul>
 							<li><a href="index.html">Home</a></li>
@@ -44,12 +104,17 @@
 
 			<!-- Banner -->
 				<section id="banner">
-					<h2>Alpha</h2>
-					<p>Another fine responsive site template freebie by HTML5 UP.</p>
-					<ul class="actions special">
-						<li><a href="#" class="button primary">Sign Up</a></li>
-						<li><a href="#" class="button">Learn More</a></li>
-					</ul>
+				    <div style="padding: 40px 80px; /* 上下、左右*/
+								border: 2px solid rgba(255, 255, 255, 0.5); 
+				                display: inline-block;
+								width: 75%;
+                				max-width: 900px;">
+				        <h2>黄色電機</h2>
+				        <p>
+				            黄色電機 配布サイト
+				        </p>
+					
+				    </div>
 				</section>
 
 			<!-- Main -->
@@ -57,11 +122,11 @@
 
 					<section class="box special">
 						<header class="major">
-							<h2>Introducing the ultimate mobile app
-							<br />
-							for doing stuff with your phone</h2>
-							<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
-							adipiscing nunc adipiscing. Condimentum turpis massa.</p>
+							<h2><i>駅をより解像度高く ー</i></h2>
+							<p>
+								Minecraftで、よりリアルな案内表示を作ってみませんか？<br>
+								※当社比
+							</p>
 						</header>
 						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
 					</section>
@@ -70,25 +135,25 @@
 						<div class="features-row">
 							<section>
 								<span class="icon solid major fa-bolt accent2"></span>
-								<h3>Magna etiam</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<h3>作成上の自由度</h3>
+								<p>デフォルトで照明モデルの採用により<br>自由度が高い</p>
 							</section>
 							<section>
 								<span class="icon solid major fa-chart-area accent3"></span>
-								<h3>Ipsum dolor</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<h3>軽量って何？</h3>
+								<p>残念ながらローポリではないので<br>大量設置は気が引ける</p>
 							</section>
 						</div>
 						<div class="features-row">
 							<section>
-								<span class="icon solid major fa-cloud accent4"></span>
-								<h3>Sed feugiat</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<span class="icon solid major fa-lightbulb accent4"></span>
+								<h3>表示部の発光</h3>
+								<p>RTM標準搭載のlightを活用することで<br>LED表示部や照明表現が可能</p>
 							</section>
 							<section>
-								<span class="icon solid major fa-lock accent5"></span>
-								<h3>Enim phasellus</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<span class="icon solid major fa-code accent5"></span>
+								<h3>jsによる可動化</h3>
+								<p>一部のモデルにはJavaScriptを導入しており<br>特殊な動作をさせることが可能</p>
 							</section>
 						</div>
 					</section>
@@ -98,8 +163,8 @@
 
 							<section class="box special">
 								<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-								<h3>Sed lorem adipiscing</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<h3>駅名標 KIT</h3>
+								<p>駅名標3種･差分多数</p>
 								<ul class="actions special">
 									<li><a href="#" class="button alt">Learn More</a></li>
 								</ul>
@@ -110,8 +175,8 @@
 
 							<section class="box special">
 								<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-								<h3>Accumsan integer</h3>
-								<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+								<h3>発車標 KIT</h3>
+								<p>全3種+おまけパーツ付き</p>
 								<ul class="actions special">
 									<li><a href="#" class="button alt">Learn More</a></li>
 								</ul>
@@ -122,37 +187,26 @@
 
 				</section>
 
-			<!-- CTA -->
-				<section id="cta">
-
-					<h2>Sign up for beta access</h2>
-					<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
-
-					<form>
-						<div class="row gtr-50 gtr-uniform">
-							<div class="col-8 col-12-mobilep">
-								<input type="email" name="email" id="email" placeholder="Email Address" />
-							</div>
-							<div class="col-4 col-12-mobilep">
-								<input type="submit" value="Sign Up" class="fit" />
-							</div>
-						</div>
-					</form>
-
-				</section>
 
 			<!-- Footer -->
 				<footer id="footer">
 					<ul class="icons">
-						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-						<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-						<li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+						<li><a href="https://x.com/kiirokunaizo" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.youtube.com/@Yellowmqo" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
+						<li><a href="https://github.com/Yellow-mqo" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li class="copy-item" style="position: relative; display: inline-block;">
+						    <a href="javascript:void(0)" 
+						       class="icon brands fa-discord" 
+						       onclick="copyToClipboard('@yellow.jar.disabled', this)">
+						        <span class="label">Discord</span>
+						    </a>
+						
+						    <div class="tooltip">クリックしてIDをコピー!</div>
+						</li>
 					</ul>
 					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					    <li>&copy; Yellow_mqo. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					    <li>Powered by <a href="https://deepmind.google/models/gemini/" target="_blank" style="border-bottom: none;"><u>Gemini 3.0 (Flash)</u></a></li>
 					</ul>
 				</footer>
 
@@ -166,6 +220,29 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+			function copyToClipboard(text, element) {
+			    const parent = element.closest('.copy-item'); // 親のliを取得
+			
+			    navigator.clipboard.writeText(text).then(() => {
+			        const tooltip = parent.querySelector('.tooltip');
+				
+			        // 「コピー済み」状態のクラスを付与
+			        parent.classList.add('is-copied');
+			        tooltip.innerText = "コピーしました！";
+				
+			        // 3秒間は表示しっぱなしにして、そのあと消す
+			        setTimeout(() => {
+			            parent.classList.remove('is-copied');
+					
+			            // アニメーションが終わる頃にテキストを元に戻す
+			            setTimeout(() => {
+			                tooltip.innerText = "クリックしてIDをコピー!";
+			            }, 300);
+			        }, 3000); // ここで表示時間を調整（3000 = 3秒）
+			    });
+			}
+			</script>
 
 	</body>
 </html>
