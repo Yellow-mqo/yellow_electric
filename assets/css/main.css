@@ -2880,6 +2880,11 @@
 			opacity: 0.25;
 		}
 
+		/* 既存のボタンのデザインを継承しつつ、カーソルだけを固定する専用クラス */
+		.no-cursor {
+		    cursor: default !important;
+		}
+
 /* Header */
 
 	#page-wrapper {
@@ -3241,7 +3246,8 @@
 			}
 
 			#main > header p {
-				border-top: solid 2px #e5e5e5;
+				border-top: solid 2px #d4d4d4;
+				width: 66%;
 				color: #777;
 				display: inline-block;
 				font-style: normal;
