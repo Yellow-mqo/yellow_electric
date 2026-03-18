@@ -80,5 +80,28 @@
 			});
 
 		}
-
+	// Footer
+	function copyToClipboard(text, element) {
+			    const parent = element.closest('.copy-item'); // 親のliを取得
+			
+			    navigator.clipboard.writeText(text).then(() => {
+			        const tooltip = parent.querySelector('.tooltip');
+				
+			        // 「コピー済み」状態のクラスを付与
+			        parent.classList.add('is-copied');
+			        tooltip.innerText = "コピーしました！";
+				
+			        // 3秒間は表示しっぱなしにして、そのあと消す
+			        setTimeout(() => {
+			            parent.classList.remove('is-copied');
+					
+			            // アニメーションが終わる頃にテキストを元に戻す
+			            setTimeout(() => {
+			                tooltip.innerText = "クリックしてIDをコピー!";
+			            }, 300);
+			        }, 3000); // ここで表示時間を調整（3000 = 3秒）
+			    });
+				
+			}
+	window.copyToClipboard = copyToClipboard;
 })(jQuery);

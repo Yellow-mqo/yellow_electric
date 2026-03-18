@@ -3299,6 +3299,66 @@
 					margin-left: 0;
 					padding-left: 0;
 				}
+				
+		    /* ツールチップ全体の親要素 */
+		    .copy-item {
+		        position: relative;
+		        display: inline-block;
+		    }
+		
+		    /* 吹き出し本体（ベース） */
+		    .copy-item .tooltip {
+		        visibility: hidden;
+		        opacity: 0;
+		        position: absolute;
+		        z-index: 10;
+		        bottom: 150%; /* アイコンからの高さ */
+		        left: 50%;
+		        transform: translateX(-50%) translateY(0);
+		        transition: all 0.3s ease;
+			
+		        background-color: #555;
+		        color: #fff;
+		        padding: 6px 12px;
+		        border-radius: 6px;
+		        font-size: 0.75rem;
+		        white-space: nowrap;
+		        pointer-events: none; /* マウス反応を邪魔しない */
+		    }
+		
+		    /* 吹き出しのツノ（三角形） */
+		    .copy-item .tooltip::after {
+		        content: "";
+		        position: absolute;
+		        top: 100%; /* 本体の真下 */
+		        left: 50%;
+		        margin-left: -5px;
+		        border-width: 5px;
+		        border-style: solid;
+		        border-color: #555 transparent transparent transparent; /* 基本は黒 */
+		        transition: border-color 0.3s ease;
+		    }
+		
+		    /* 【ホバー時】または【コピー完了時】の表示設定（位置を固定） */
+		    .copy-item:hover .tooltip,
+		    .copy-item.is-copied .tooltip {
+		        visibility: visible !important;
+		        opacity: 1 !important;
+		        transform: translateX(-50%) translateY(-8px) !important; /* 上に8px浮かす */
+		    }
+		
+		    /* 【コピー完了時】専用の色指定 */
+		    .copy-item.is-copied .tooltip {
+		        background-color: #00ff55 !important;
+		        color: #333 !important;
+		        font-weight: bold;
+		    }
+		
+		    /* 【コピー完了時】専用のツノの色 */
+		    .copy-item.is-copied .tooltip::after {
+		        border-top-color: #00ff55 !important;
+		    }
+			
 
 /* CTA */
 
