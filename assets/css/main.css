@@ -2886,6 +2886,8 @@
 		    cursor: default !important;
 		}
 
+
+
 /* Header */
 
 	#page-wrapper {
@@ -3365,6 +3367,32 @@
 		    .copy-item.is-copied .tooltip::after {
 		        border-top-color: #00ff55 !important;
 		    }
+			
+			
+			/* ~~~~~~~~~~~~~~ */
+
+
+			/* ポップアップ(tooltip)のサイズと位置だけを狙い撃ち */
+			.tooltip {
+			    /* 1. 横幅を「文字の長さ」にピタッと合わせる */
+			    width: max-content !important; 
+			    min-width: 0 !important;
+			    white-space: nowrap !important; /* 改行させない */
+			
+			    /* 2. 位置をボタンのすぐ上まで下げる */
+			    /* 「上すぎる」場合はこの数字を 102% や 105% に調整 */
+			    bottom: 75% !important; 
+			    left: 50% !important;
+			    transform: translateX(-50%) !important;
+			
+			    /* 3. ポップアップ自体の文字サイズを小さく */
+			    font-size: 0.75rem !important; 
+			    padding: 4px 10px !important; /* 左右の余白を少し詰める */
+			
+			    /* 4. その他、今のデザインを維持しつつ調整 */
+			    position: absolute !important;
+			    z-index: 100 !important;
+			}
 			
 
 /* CTA */
