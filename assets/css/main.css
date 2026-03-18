@@ -2094,6 +2094,7 @@
 		padding: 0 1em;
 		text-decoration: none;
 		width: 100%;
+    	resize: none; /* これで手動サイズ変更を禁止します */
 	}
 
 		input[type="text"]:invalid,

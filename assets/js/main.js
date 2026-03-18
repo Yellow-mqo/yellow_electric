@@ -104,4 +104,31 @@
 				
 			}
 	window.copyToClipboard = copyToClipboard;
+
+	//Form
+		const form = document.getElementById('contact-form');
+		const status = document.getElementById('form-status');
+
+		if (form) {
+		    form.addEventListener('submit', e => {
+		        e.preventDefault();
+		        status.style.display = 'block';
+		        status.innerText = '送信中...';
+			
+		        const formData = new FormData(form);
+		        const url = 'https://script.google.com/macros/s/AKfycbyqxjwuzsjE3izlpEefSQ9xvYCIFSJy6Q-H5CaM0DGNNSgFSpSquOf7Sch6ryltxMNT/exec';
+			
+		        fetch(url, {
+		            method: 'POST',
+		            body: new URLSearchParams(formData)
+		        })
+		        .then(res => {
+		            status.innerText = 'メッセージを受け付けました！ありがとうございます。';
+		            form.reset();
+		        })
+		        .catch(error => {
+		            status.innerText = 'エラーが発生しました。時間を置いて再度お試しください。';
+		        });
+		    });
+		}
 })(jQuery);

@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>黄色電機 | お問い合わせ</title>
+		<title>黄色電機 | 開発者</title>
 		<link rel="icon" href="images/favicon.png" type="image/png">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -34,7 +34,7 @@
 										</ul>
 									</li>
 									<li><a href="elements.html">サイトについて</a></li>
-									<li><a href="contact.html">お問い合わせ</a></li>
+									<li><a href="contact.html">開発者</a></li>
 								</ul>
 							</li>
 							<li><a href="https://github.com/Yellow-mqo" class="button icon brands fa-github" target="_blank">Github</a></li>
@@ -45,50 +45,57 @@
 			<!-- Main -->
 				<section id="main" class="container medium">
 					<header>
-						<h2>Contact Us</h2>
-						<p>Tell us what you think about our little operation.</p>
+						<h2>開発者</h2>
+						<p>中の人について</p>
 					</header>
+
 					<div class="box">
-						<form method="post" action="#">
-							<div class="row gtr-50 gtr-uniform">
-								<div class="col-6 col-12-mobilep">
-									<input type="text" name="name" id="name" value="" placeholder="Name" />
-								</div>
-								<div class="col-6 col-12-mobilep">
-									<input type="email" name="email" id="email" value="" placeholder="Email" />
-								</div>
-								<div class="col-12">
-									<input type="text" name="subject" id="subject" value="" placeholder="Subject" />
-								</div>
-								<div class="col-12">
-									<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
-								</div>
-								<div class="col-12">
-									<ul class="actions special">
-										<li><input type="submit" value="Send Message" /></li>
-									</ul>
-								</div>
-							</div>
-						</form>
+						<h3>お問い合わせ</h3>
+						<p>
+							RTM-Addonに関するお問い合わせは<u>Twitter(旧Twitter)のDM</u>にてお願いします。<br>
+							アカウントは下記ボタンからアクセスください。<br>
+							<br>
+							DiscordのIDも記載しておきますので、Discordのほうが都合が良い方は、そちらからも受け付けております。<br>
+							なお、万が一バグ報告等をする場合はGithubの配布リポジトリからIssueを立てていただきますようお願いします。<br>
+							Githubでの報告が厳しい方は、それ以外の方法でも大丈夫です。
+						</p>
 					</div>
+
+					<div class="box">
+						<h3>問い合わせフォーム</h3>
+						<p><strong style="color: #ff3c3c;">！返信が必要な場合はここに入力しないで下さい！</strong><br>
+						返信が不要な要望や、提案等はこちらにご入力ください。<br>
+						※もしかしたらTwitterで反応したりはするかもしれません。
+						</p>
+							<form id="contact-form">
+							    <div class="row gtr-50 gtr-uniform">
+							        <div class="col-12">
+							            <textarea name="message" id="message" placeholder="メッセージを入力してください" rows="6" required></textarea>
+							        </div>
+							        <div class="col-12">
+							            <ul class="actions special">
+							                <li><input type="submit" value="送信" class="button primary fit" /></li>
+							            </ul>
+							        </div>
+							    </div>
+							</form>
+							<div id="form-status" style="display:none; margin-top:1em; color:#00be8f;">送信中...</div>
+					</div>
+
+					<div class="box">
+						<h3>各種リンク</h3>
+						<p>私の各種SNSのリンクです</p>
+						<ul class="actions fit alt stacked">
+						    <li><a href="https://github.com/Yellow-mqo" class="button fit small" target="_blank" style="background-color: #353535; color: #ffffff;">Github</a></li>
+						    <li><a href="https://x.com/kiirokunaizo" class="button fit small" target="_blank" style="background-color: #1bd1ff; color: #000000;">Twitter (旧Twitter)</a></li>
+						    <li><a href="https://www.youtube.com/@Yellowmqo" class="button fit small" target="_blank" style="background-color: #e62626; color: #ffffff;">Youtube</a></li>
+						</ul>
+					</div>
+
 				</section>
 
 			<!-- Footer -->
 				<footer id="footer">
-					<ul class="icons">
-						<li><a href="https://x.com/kiirokunaizo" class="icon brands fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
-						<li><a href="https://www.youtube.com/@Yellowmqo" class="icon brands fa-youtube" target="_blank"><span class="label">YouTube</span></a></li>
-						<li><a href="https://github.com/Yellow-mqo" class="icon brands fa-github" target="_blank"><span class="label">Github</span></a></li>
-						<li class="copy-item" style="position: relative; display: inline-block;">
-						    <a href="javascript:void(0)" 
-						       class="icon brands fa-discord" 
-						       onclick="copyToClipboard('@yellow.jar.disabled', this)">
-						        <span class="label">Discord</span>
-						    </a>
-						
-						    <div class="tooltip">クリックしてIDをコピー!</div>
-						</li>
-					</ul>
 					<ul class="copyright">
 					    <li>&copy; Yellow_mqo. All rights reserved.</li><li>Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a></li>
 					    <li>Powered by <a href="https://deepmind.google/models/gemini/" target="_blank" style="border-bottom: none;"><u>Gemini 3.0 (Flash)</u></a></li>
