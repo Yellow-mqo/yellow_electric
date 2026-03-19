@@ -162,11 +162,19 @@
     		}
 
 	        // 2. 連打防止（ボタンを無効化）
-	        submitBtn.disabled = true; 
-	        submitBtn.innerText = '送信中...';
-	        status.style.display = 'block';
-	        status.innerText = '送信しています。少々お待ちください...';
-	        status.style.color = 'inherit';
+    	    submitBtn.disabled = true; 
+    	    submitBtn.innerText = '送信中...';
+			
+    	    // --- 送信中のスタイル設定 ---
+    	    status.style.display = 'block';
+    	    status.innerText = '⏳ 送信しています。少々お待ちください...';
+			
+    	    status.style.color = '#555';              // 文字色：濃いグレー
+    	    status.style.backgroundColor = '#f5f5f5'; // 背景：薄いグレー
+    	    status.style.border = '1px solid #ccc';   // 枠線：グレー
+    	    status.style.padding = '12px';
+    	    status.style.borderRadius = '4px';
+			status.style.fontWeight = 'bold';
 
 	        try {
 	            const formData = new URLSearchParams(new FormData(form));
