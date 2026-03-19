@@ -2248,6 +2248,16 @@
 		opacity: 1.0;
 	}
 
+	#form-status {
+    display: none; /* 最初は隠しておく */
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.3s ease; /* ふわっと出すためのアニメーション */
+	}
+
 /* Box */
 
 	.box {

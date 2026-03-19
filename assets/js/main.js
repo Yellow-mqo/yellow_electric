@@ -104,52 +104,115 @@
 				
 			}
 	window.copyToClipboard = copyToClipboard;
-// --- 1. ユーザー識別用のIDを取得または作成 ---
-function getVisitorID() {
+
+	// --- 1. IPベースの固定IDを取得・作成 ---
+	async function getVisitorID() {
+    // IDの形式やルールを変えたい時は、ここを 'v2', 'v3' と更新すれば全員リセットされます
+    const VERSION = 'v1'; 
+
     let id = localStorage.getItem('visitor_id');
-    if (!id) {
-        // 初めての人には「OS情報 + 画面サイズ + ランダム文字列」でIDを作る
-        const info = [
-            navigator.userAgent.replace(/[^a-zA-Z]/g, '').slice(0, 10), // OS/ブラウザ情報の断片
-            screen.width + 'x' + screen.height,                         // 画面解像度
-            Math.random().toString(36).substring(2, 10)                 // ランダム
-        ].join('-');
-        id = 'ID-' + info;
+    let savedVersion = localStorage.getItem('visitor_id_version');
+
+    // IDがない、またはバージョンが古い場合に作成
+    if (!id || savedVersion !== VERSION) {
+        let ip = "0.0.0.0";
+        try {
+            // IPアドレスを取得
+            const res = await fetch('https://api.ipify.org?format=json');
+            const data = await res.json();
+            ip = data.ip;
+        } catch (e) {
+            console.error("IP取得失敗", e);
+        }
+
+        // IPアドレスをBase64で変換（隠し味なし）
+        const encoded = btoa(ip);
+        id = 'NET-' + encoded.substring(0, 12); 
+        
+        // 新しいIDと現在のバージョンを保存
         localStorage.setItem('visitor_id', id);
+        localStorage.setItem('visitor_id_version', VERSION);
     }
     return id;
-}
 
-// --- 2. フォーム送信処理 ---
-const form = document.getElementById('contact-form');
-const status = document.getElementById('form-status');
+	}
 
-if (form) {
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        status.style.display = 'block';
-        status.innerText = '送信中...';
-    
-        const formData = new URLSearchParams(new FormData(form));
-        
-        // ★ここで識別IDを追加して一緒に送る
-        formData.append('visitorID', getVisitorID());
-    
-        const url = 'https://script.google.com/macros/s/AKfycbyqxjwuzsjE3izlpEefSQ9xvYCIFSJy6Q-H5CaM0DGNNSgFSpSquOf7Sch6ryltxMNT/exec';
-    
-        fetch(url, {
-            method: 'POST',
-            body: formData, // URLSearchParams形式で送信
-            mode: 'no-cors' // GAS側のCORSエラー回避（必要に応じて）
-        })
-        .then(() => {
-            status.innerText = 'メッセージを受け付けました！ありがとうございます。';
-            form.reset();
-        })
-        .catch(error => {
-            status.innerText = 'エラーが発生しました。時間を置いて再度お試しください。';
-            console.error(error);
-        });
-    });
-}
+	// --- フォーム送信処理 (連打&空欄防止) ---
+	const form = document.getElementById('contact-form');
+	const status = document.getElementById('form-status');
+	const submitBtn = document.getElementById('submit-button'); // ★ボタンを取得
+
+	if (form) {
+	    form.addEventListener('submit', async e => {
+	        e.preventDefault();
+
+			// .trim() でスペースを削った後の文字を取得
+    		const message = form.message.value.trim(); 
+
+    		// 「何も入力していない」または「スペースだけ」ならここで止まる
+    		if (!message) {
+    		    status.style.display = 'block';
+    		    status.innerText = '⚠️ メッセージを入力してください（空白のみは送信できません）';
+    		    status.style.color = 'orange'; // 警告の色
+    		    status.style.backgroundColor = '#fff3e0'; // 薄いオレンジ
+    		    status.style.border = '1px solid #ffe0b2';
+    		    status.style.padding = '12px';
+    		    status.style.borderRadius = '4px';
+    		    return; // 送信処理へ進まずに終了
+    		}
+
+	        // 2. 連打防止（ボタンを無効化）
+	        submitBtn.disabled = true; 
+	        submitBtn.innerText = '送信中...';
+	        status.style.display = 'block';
+	        status.innerText = '送信しています。少々お待ちください...';
+	        status.style.color = 'inherit';
+
+	        try {
+	            const formData = new URLSearchParams(new FormData(form));
+	            const vID = await getVisitorID();
+	            formData.append('visitorID', vID);
+			
+	            const url = 'https://script.google.com/macros/s/AKfycbyqxjwuzsjE3izlpEefSQ9xvYCIFSJy6Q-H5CaM0DGNNSgFSpSquOf7Sch6ryltxMNT/exec';
+			
+	            await fetch(url, {
+	                method: 'POST',
+	                body: formData,
+	                mode: 'no-cors'
+	            });
+
+			// 3. 成功時の処理
+        	    status.style.display = 'block';
+        	    status.innerText = '✅ 送信が完了しました。ありがとうございます！';
+				
+        	    // スタイルを「成功の緑」に固定
+        	    status.style.color = '#2e7d32'; // 濃い緑
+        	    status.style.backgroundColor = '#e8f5e9'; // ごく薄い緑
+        	    status.style.border = '1px solid #c8e6c9';
+        	    status.style.padding = '12px';
+        	    status.style.borderRadius = '4px';
+        	    status.style.fontWeight = 'bold';
+
+        	    form.reset();
+        	    submitBtn.innerText = '続けて送信する';
+        	    submitBtn.disabled = false; // 次の入力のために戻す
+
+        	} catch (error) {
+        	    // 4. エラー時の処理
+        	    status.style.display = 'block';
+        	    status.innerText = '❌ エラーが発生しました。ネット接続を確認してください。';
+			
+        	    // スタイルを「警告の赤」に
+        	    status.style.color = '#d32f2f'; // 濃い赤
+        	    status.style.backgroundColor = '#ffebee'; // ごく薄い赤
+        	    status.style.border = '1px solid #ffcdd2';
+        	    status.style.padding = '12px';
+        	    status.style.borderRadius = '4px';
+
+        	    console.error(error);
+        	    submitBtn.disabled = false;
+        	    submitBtn.innerText = '再試行する';
+        	}
+	    });
+	}
 })(jQuery);
