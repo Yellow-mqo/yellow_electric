@@ -3381,14 +3381,14 @@
 		
 		    /* 【コピー完了時】専用の色指定 */
 		    .copy-item.is-copied .tooltip {
-		        background-color: #00ff55 !important;
-		        color: #333 !important;
+		        background-color: #0ab927 !important;
+		        color: #ffffff !important;
 		        font-weight: bold;
 		    }
 		
 		    /* 【コピー完了時】専用のツノの色 */
 		    .copy-item.is-copied .tooltip::after {
-		        border-top-color: #00ff55 !important;
+		        border-top-color: #0ab927 !important;
 		    }
 			
 /* Aboutセクション（コンテナ）の調整 */

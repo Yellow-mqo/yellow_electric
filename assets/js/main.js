@@ -104,31 +104,52 @@
 				
 			}
 	window.copyToClipboard = copyToClipboard;
+// --- 1. ユーザー識別用のIDを取得または作成 ---
+function getVisitorID() {
+    let id = localStorage.getItem('visitor_id');
+    if (!id) {
+        // 初めての人には「OS情報 + 画面サイズ + ランダム文字列」でIDを作る
+        const info = [
+            navigator.userAgent.replace(/[^a-zA-Z]/g, '').slice(0, 10), // OS/ブラウザ情報の断片
+            screen.width + 'x' + screen.height,                         // 画面解像度
+            Math.random().toString(36).substring(2, 10)                 // ランダム
+        ].join('-');
+        id = 'ID-' + info;
+        localStorage.setItem('visitor_id', id);
+    }
+    return id;
+}
 
-	//Form
-		const form = document.getElementById('contact-form');
-		const status = document.getElementById('form-status');
+// --- 2. フォーム送信処理 ---
+const form = document.getElementById('contact-form');
+const status = document.getElementById('form-status');
 
-		if (form) {
-		    form.addEventListener('submit', e => {
-		        e.preventDefault();
-		        status.style.display = 'block';
-		        status.innerText = '送信中...';
-			
-		        const formData = new FormData(form);
-		        const url = 'https://script.google.com/macros/s/AKfycbyqxjwuzsjE3izlpEefSQ9xvYCIFSJy6Q-H5CaM0DGNNSgFSpSquOf7Sch6ryltxMNT/exec';
-			
-		        fetch(url, {
-		            method: 'POST',
-		            body: new URLSearchParams(formData)
-		        })
-		        .then(res => {
-		            status.innerText = 'メッセージを受け付けました！ありがとうございます。';
-		            form.reset();
-		        })
-		        .catch(error => {
-		            status.innerText = 'エラーが発生しました。時間を置いて再度お試しください。';
-		        });
-		    });
-		}
+if (form) {
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        status.style.display = 'block';
+        status.innerText = '送信中...';
+    
+        const formData = new URLSearchParams(new FormData(form));
+        
+        // ★ここで識別IDを追加して一緒に送る
+        formData.append('visitorID', getVisitorID());
+    
+        const url = 'https://script.google.com/macros/s/AKfycbyqxjwuzsjE3izlpEefSQ9xvYCIFSJy6Q-H5CaM0DGNNSgFSpSquOf7Sch6ryltxMNT/exec';
+    
+        fetch(url, {
+            method: 'POST',
+            body: formData, // URLSearchParams形式で送信
+            mode: 'no-cors' // GAS側のCORSエラー回避（必要に応じて）
+        })
+        .then(() => {
+            status.innerText = 'メッセージを受け付けました！ありがとうございます。';
+            form.reset();
+        })
+        .catch(error => {
+            status.innerText = 'エラーが発生しました。時間を置いて再度お試しください。';
+            console.error(error);
+        });
+    });
+}
 })(jQuery);
