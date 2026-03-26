@@ -14,4 +14,4 @@ async function loadFooter() {
     const html = await response.text();
     document.getElementById('footer-common').innerHTML = html;
 }
-loadHeader();
+loadFooter();
